@@ -1,3 +1,4 @@
+ ![Build and Run Tests](https://github.com/olearczuk/lock-free-cpp/actions/workflows/build_run_tests.yml/badge.svg?branch=main)
  # Lock-free Data Structures and Algorithms
  - [SeqLock](https://en.wikipedia.org/wiki/Seqlock) - [src/seq_lock.hpp](src/seq_lock.hpp)
     - [Can Seqlocks Get Along With Programming Language Memory Models?](https://web.archive.org/web/20210506174408/https://www.hpl.hp.com/techreports/2012/HPL-2012-68.pdf) — *Hans-J. Boehm*
