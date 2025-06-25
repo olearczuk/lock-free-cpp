@@ -14,7 +14,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_executable(tests test/test_seq_lock.cpp)
+file(GLOB TEST_SOURCES test/*.cpp)
+add_executable(tests ${TEST_SOURCES})
 target_link_libraries(tests gtest gtest_main)
 add_test(NAME tests COMMAND tests)
 
