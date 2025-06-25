@@ -2,8 +2,11 @@
  # Lock-free Data Structures and Algorithms
  ### [SeqLock](https://en.wikipedia.org/wiki/Seqlock) - [src/seq_lock.hpp](src/seq_lock.hpp)
 [Can Seqlocks Get Along With Programming Language Memory Models](https://web.archive.org/web/20210506174408/https://www.hpl.hp.com/techreports/2012/HPL-2012-68.pdf) — *Hans-J. Boehm*
+### Zero Sticky Counter
+Sticky counter is a concurrent counter that never goes below zero. Once the counter reaches zero, it becomes "sticky" and can not be incremented ago.<br/>
+Inspiration comes from [Introduction to Wait-free Algorithms in C++ Programming - Daniel Anderson - CppCon 2024](https://www.youtube.com/watch?v=kPh8pod0-gk&list=PLr05g8IRfRd6kAxBpmpGsijzlVLCuuPqZ)
  ### LockFreeZeroStickyCounter - [src/lock_free_zero_sticky_counter](src/lock_free_zero_sticky_counter)
-A lock-free counter that allows concurrent increments and decrements by multiple threads, ensuring the counter never goes below zero. Once the counter reaches zero, it becomes "sticky" and cannot be incremented again. It avoids locks by using atomic operations, making it suitable for high-performance, multi-threaded environments.
+It avoids locks by using atomic operations, making it suitable for high-performance, multi-threaded environments.
  ### WaitFreeZeroStickyCounter - [src/wait_free_zero_sticky_counter](src/wait_free_zero_sticky_counter)
  Same as `LockFreeZeroStickyCounter` but it's wait-free instead.
 
