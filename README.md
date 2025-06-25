@@ -5,9 +5,9 @@
 ### Zero Sticky Counter
 Sticky counter is a concurrent counter that never goes below zero. Once the counter reaches zero, it becomes "sticky" and can not be incremented ago.<br/>
 Inspiration comes from [Introduction to Wait-free Algorithms in C++ Programming - Daniel Anderson - CppCon 2024](https://www.youtube.com/watch?v=kPh8pod0-gk&list=PLr05g8IRfRd6kAxBpmpGsijzlVLCuuPqZ)
- ### LockFreeZeroStickyCounter - [src/lock_free_zero_sticky_counter](src/lock_free_zero_sticky_counter)
+ ### LockFreeZeroStickyCounter - [src/lock_free_zero_sticky_counter.hpp](src/lock_free_zero_sticky_counter.hpp)
 It avoids locks by using atomic operations, making it suitable for high-performance, multi-threaded environments.
- ### WaitFreeZeroStickyCounter - [src/wait_free_zero_sticky_counter](src/wait_free_zero_sticky_counter)
+ ### WaitFreeZeroStickyCounter - [src/wait_free_zero_sticky_counter.hpp](src/wait_free_zero_sticky_counter.hpp)
  Same as `LockFreeZeroStickyCounter` but it's wait-free instead.
 
 ## Tests and benchmarks
