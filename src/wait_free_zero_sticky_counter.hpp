@@ -2,7 +2,7 @@
 
 #include <atomic>
 
-namespace wait_free_zero_sticky_counter {
+namespace zero_sticky_counter {
 
 /**
  * @brief A wait-free, zero-sticky reference counter.
@@ -104,4 +104,4 @@ class WaitFreeZeroStickyCounter {
   }
 };
 
-}  // namespace wait_free_zero_sticky_counter
+}  // namespace zero_sticky_counter

@@ -2,7 +2,7 @@
 
 #include <atomic>
 
-namespace lock_free_zero_sticky_counter {
+namespace zero_sticky_counter {
 
 /**
  * @brief A lock-free, zero-sticky reference counter.

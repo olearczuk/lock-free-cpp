@@ -46,7 +46,7 @@ static void BM_Counter_Ratio(benchmark::State& state) {
 
 // Low increment, low decrement (mostly reads)
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   lock_free_zero_sticky_counter::LockFreeZeroStickyCounter,
+                   zero_sticky_counter::LockFreeZeroStickyCounter,
                    INC_RATIO_LOW, DEC_RATIO_LOW)
     ->Threads(2)
     ->Threads(4)
@@ -55,7 +55,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
     ->Threads(32)
     ->Name("LockFreeZeroStickyCounter/Inc10_Dec10_Read80");
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   wait_free_zero_sticky_counter::WaitFreeZeroStickyCounter,
+                   zero_sticky_counter::WaitFreeZeroStickyCounter,
                    INC_RATIO_LOW, DEC_RATIO_LOW)
     ->Threads(2)
     ->Threads(4)
@@ -66,7 +66,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
 
 // High increment, low decrement
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   lock_free_zero_sticky_counter::LockFreeZeroStickyCounter,
+                   zero_sticky_counter::LockFreeZeroStickyCounter,
                    INC_RATIO_HIGH, DEC_RATIO_LOW)
     ->Threads(2)
     ->Threads(4)
@@ -75,7 +75,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
     ->Threads(32)
     ->Name("LockFreeZeroStickyCounter/Inc45_Dec10_Read45");
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   wait_free_zero_sticky_counter::WaitFreeZeroStickyCounter,
+                   zero_sticky_counter::WaitFreeZeroStickyCounter,
                    INC_RATIO_HIGH, DEC_RATIO_LOW)
     ->Threads(2)
     ->Threads(4)
@@ -86,7 +86,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
 
 // Low increment, high decrement
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   lock_free_zero_sticky_counter::LockFreeZeroStickyCounter,
+                   zero_sticky_counter::LockFreeZeroStickyCounter,
                    INC_RATIO_LOW, DEC_RATIO_HIGH)
     ->Threads(2)
     ->Threads(4)
@@ -95,7 +95,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
     ->Threads(32)
     ->Name("LockFreeZeroStickyCounter/Inc10_Dec45_Read45");
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   wait_free_zero_sticky_counter::WaitFreeZeroStickyCounter,
+                   zero_sticky_counter::WaitFreeZeroStickyCounter,
                    INC_RATIO_LOW, DEC_RATIO_HIGH)
     ->Threads(2)
     ->Threads(4)
@@ -106,7 +106,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
 
 // High increment, high decrement (few reads)
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   lock_free_zero_sticky_counter::LockFreeZeroStickyCounter,
+                   zero_sticky_counter::LockFreeZeroStickyCounter,
                    INC_RATIO_HIGH, DEC_RATIO_HIGH)
     ->Threads(2)
     ->Threads(4)
@@ -115,7 +115,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
     ->Threads(32)
     ->Name("LockFreeZeroStickyCounter/Inc45_Dec45_Read10");
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   wait_free_zero_sticky_counter::WaitFreeZeroStickyCounter,
+                   zero_sticky_counter::WaitFreeZeroStickyCounter,
                    INC_RATIO_HIGH, DEC_RATIO_HIGH)
     ->Threads(2)
     ->Threads(4)
@@ -128,7 +128,7 @@ BENCHMARK_MAIN();
 
 // Increasing is clear majority
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   lock_free_zero_sticky_counter::LockFreeZeroStickyCounter,
+                   zero_sticky_counter::LockFreeZeroStickyCounter,
                    INC_RATIO_VERY_HIGH, DEC_RATIO_VERY_LOW)
     ->Threads(2)
     ->Threads(4)
@@ -137,7 +137,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
     ->Threads(32)
     ->Name("LockFreeZeroStickyCounter/Inc80_Dec5_Read15");
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   wait_free_zero_sticky_counter::WaitFreeZeroStickyCounter,
+                   zero_sticky_counter::WaitFreeZeroStickyCounter,
                    INC_RATIO_VERY_HIGH, DEC_RATIO_VERY_LOW)
     ->Threads(2)
     ->Threads(4)
@@ -148,7 +148,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
 
 // Decreasing is clear majority
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   lock_free_zero_sticky_counter::LockFreeZeroStickyCounter,
+                   zero_sticky_counter::LockFreeZeroStickyCounter,
                    INC_RATIO_VERY_LOW, DEC_RATIO_VERY_HIGH)
     ->Threads(2)
     ->Threads(4)
@@ -157,7 +157,7 @@ BENCHMARK_TEMPLATE(BM_Counter_Ratio,
     ->Threads(32)
     ->Name("LockFreeZeroStickyCounter/Inc5_Dec80_Read15");
 BENCHMARK_TEMPLATE(BM_Counter_Ratio,
-                   wait_free_zero_sticky_counter::WaitFreeZeroStickyCounter,
+                   zero_sticky_counter::WaitFreeZeroStickyCounter,
                    INC_RATIO_VERY_LOW, DEC_RATIO_VERY_HIGH)
     ->Threads(2)
     ->Threads(4)

@@ -8,18 +8,18 @@
 
 // Basic single-threaded tests
 TEST(LockFreeZeroStickyCounter, InitialValueIsOne) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   EXPECT_EQ(counter.read(), 1u);
 }
 
 TEST(LockFreeZeroStickyCounter, IncrementIfNotZeroWorks) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   EXPECT_TRUE(counter.incrementIfNotZero());
   EXPECT_EQ(counter.read(), 2u);
 }
 
 TEST(LockFreeZeroStickyCounter, IncrementIfZeroFails) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   EXPECT_TRUE(counter.decrement());  // goes to 0, should return true
   EXPECT_EQ(counter.read(), 0u);
   EXPECT_FALSE(counter.incrementIfNotZero());
@@ -27,13 +27,13 @@ TEST(LockFreeZeroStickyCounter, IncrementIfZeroFails) {
 }
 
 TEST(LockFreeZeroStickyCounter, DecrementReturnsTrueAtZero) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   EXPECT_TRUE(counter.decrement());
   EXPECT_EQ(counter.read(), 0u);
 }
 
 TEST(LockFreeZeroStickyCounter, DecrementReturnsFalseIfNotZero) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   counter.incrementIfNotZero();
   EXPECT_FALSE(counter.decrement());
   EXPECT_TRUE(counter.decrement());
@@ -42,7 +42,7 @@ TEST(LockFreeZeroStickyCounter, DecrementReturnsFalseIfNotZero) {
 
 // Concurrent increment test
 TEST(LockFreeZeroStickyCounter, ConcurrentIncrements) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   constexpr int num_threads = 8;
   constexpr int increments_per_thread = 10000;
   std::vector<std::thread> threads;
@@ -64,7 +64,7 @@ TEST(LockFreeZeroStickyCounter, ConcurrentIncrements) {
 // Concurrent decrement test
 TEST(LockFreeZeroStickyCounter, ConcurrentDecrements) {
   constexpr int start_value = 10000;
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter(start_value);
+  zero_sticky_counter::LockFreeZeroStickyCounter counter(start_value);
 
   std::atomic<int> zeros{0};
   constexpr int num_threads = 8;
@@ -88,7 +88,7 @@ TEST(LockFreeZeroStickyCounter, ConcurrentDecrements) {
 
 // Stress test: increments and decrements concurrently
 TEST(LockFreeZeroStickyCounter, ConcurrentIncDecStress) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   constexpr int num_threads = 8;
   constexpr int ops_per_thread = 10000;
   std::vector<std::thread> threads;
@@ -112,7 +112,7 @@ TEST(LockFreeZeroStickyCounter, ConcurrentIncDecStress) {
 
 // Stress test: increments, decrements, and reads concurrently
 TEST(LockFreeZeroStickyCounter, ConcurrentIncDecReadStress) {
-  lock_free_zero_sticky_counter::LockFreeZeroStickyCounter counter;
+  zero_sticky_counter::LockFreeZeroStickyCounter counter;
   constexpr int num_threads = 8;
   constexpr int ops_per_thread = 10000;
   constexpr int num_readers = 4;
