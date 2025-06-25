@@ -4,6 +4,8 @@
 [Can Seqlocks Get Along With Programming Language Memory Models](https://web.archive.org/web/20210506174408/https://www.hpl.hp.com/techreports/2012/HPL-2012-68.pdf) — *Hans-J. Boehm*
  ### LockFreeZeroStickyCounter - [src/lock_free_zero_sticky_counter](src/lock_free_zero_sticky_counter)
 A lock-free counter that allows concurrent increments and decrements by multiple threads, ensuring the counter never goes below zero. Once the counter reaches zero, it becomes "sticky" and cannot be incremented again. It avoids locks by using atomic operations, making it suitable for high-performance, multi-threaded environments.
+ ### WaitFreeZeroStickyCounter - [src/wait_free_zero_sticky_counter](src/wait_free_zero_sticky_counter)
+ Same as `LockFreeZeroStickyCounter` but it's wait-free instead.
 
 ## Tests and benchmarks
 All tests are in [tests](tests/) subdirectory and all benchmarks are in [benchmarks](benchmarks/) subdirectory.
@@ -12,5 +14,8 @@ cmake -E make_directory build && cd build && cmake .. && make
 # Run tests
 ./tests
 # Run benchmarks
-./benchmarks
+# SeqLock vs mutex and shared mutex
+./bench_seq_lock
+# LockFreeZeroStickyCounter vs WaitFreeZeroStickyCounter
+./bench_zero_sticky_counters
 ```

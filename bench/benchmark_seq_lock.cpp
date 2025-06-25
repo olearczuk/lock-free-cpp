@@ -1,11 +1,11 @@
-#include "../src/seq_lock.hpp"
-
 #include <benchmark/benchmark.h>
 
 #include <atomic>
 #include <mutex>
 #include <random>
 #include <shared_mutex>
+
+#include "../src/seq_lock.hpp"
 
 // Instantiate benchmarks for different write ratios
 constexpr short SMALL_WRITE_PERCENTAGE = 5;
@@ -83,19 +83,19 @@ BENCHMARK_TEMPLATE(BM_Lock_WR, seq_lock::SeqLock, SMALL_WRITE_PERCENTAGE)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("seq_lock/SeqLock/SmallWritePercentage");
+    ->Name("SeqLock/SmallWritePercentage");
 BENCHMARK_TEMPLATE(BM_Lock_WR, SharedMutexLock, SMALL_WRITE_PERCENTAGE)
     ->Threads(2)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("seq_lock/SharedMutex/SmallWritePercentage");
+    ->Name("SharedMutex/SmallWritePercentage");
 BENCHMARK_TEMPLATE(BM_Lock_WR, MutexLock, SMALL_WRITE_PERCENTAGE)
     ->Threads(2)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("seq_lock/Mutex/SmallWritePercentage");
+    ->Name("Mutex/SmallWritePercentage");
 
 // // Large write percentage benchmarks
 BENCHMARK_TEMPLATE(BM_Lock_WR, seq_lock::SeqLock, LARGE_WRITE_PERCENTAGE)
@@ -103,18 +103,18 @@ BENCHMARK_TEMPLATE(BM_Lock_WR, seq_lock::SeqLock, LARGE_WRITE_PERCENTAGE)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("seq_lock/SeqLock/SmallWritePercentage");
+    ->Name("SeqLock/SmallWritePercentage");
 BENCHMARK_TEMPLATE(BM_Lock_WR, SharedMutexLock, LARGE_WRITE_PERCENTAGE)
     ->Threads(2)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("seq_lock/SharedMutex/SmallWritePercentage");
+    ->Name("SharedMutex/SmallWritePercentage");
 BENCHMARK_TEMPLATE(BM_Lock_WR, MutexLock, LARGE_WRITE_PERCENTAGE)
     ->Threads(2)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("seq_lock/Mutex/SmallWritePercentage");
+    ->Name("Mutex/SmallWritePercentage");
 
 BENCHMARK_MAIN();

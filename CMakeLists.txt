@@ -27,5 +27,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(benchmark)
 
-add_executable(benchmarks bench/benchmark_seq_lock.cpp)
-target_link_libraries(benchmarks PRIVATE benchmark::benchmark pthread)
+add_executable(bench_seq_lock bench/benchmark_seq_lock.cpp)
+add_executable(bench_zero_sticky_counters bench/benchmark_zero_sticky_counters.cpp)
+target_link_libraries(bench_seq_lock PRIVATE benchmark::benchmark pthread)
+target_link_libraries(bench_zero_sticky_counters PRIVATE benchmark::benchmark pthread)
