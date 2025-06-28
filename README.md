@@ -18,7 +18,7 @@ Inspiration comes from [Single Producer Single Consumer Lock-free FIFO From the 
 ## Tests and benchmarks
 All tests are in [tests](tests/) subdirectory and all benchmarks are in [benchmarks](benchmarks/) subdirectory.
 ```bash
-cmake -E make_directory build && cd build && cmake .. && make
+cmake -E make_directory build && cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make
 # Run tests
 ./tests
 # Run benchmarks
