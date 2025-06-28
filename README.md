@@ -2,6 +2,7 @@
  # Lock-free Data Structures and Algorithms
  ### [SeqLock](https://en.wikipedia.org/wiki/Seqlock) - [src/seq_lock.hpp](src/seq_lock.hpp)
 [Can Seqlocks Get Along With Programming Language Memory Models](https://web.archive.org/web/20210506174408/https://www.hpl.hp.com/techreports/2012/HPL-2012-68.pdf) — *Hans-J. Boehm*
+
 ### Zero Sticky Counter
 Sticky counter is a concurrent counter that never goes below zero. Once the counter reaches zero, it becomes "sticky" and can not be incremented ago.<br/>
 Inspiration comes from [Introduction to Wait-free Algorithms in C++ Programming - Daniel Anderson - CppCon 2024](https://www.youtube.com/watch?v=kPh8pod0-gk&list=PLr05g8IRfRd6kAxBpmpGsijzlVLCuuPqZ)
@@ -9,6 +10,10 @@ Inspiration comes from [Introduction to Wait-free Algorithms in C++ Programming 
 It avoids locks by using atomic operations, making it suitable for high-performance, multi-threaded environments.
  ### WaitFreeZeroStickyCounter - [src/wait_free_zero_sticky_counter.hpp](src/wait_free_zero_sticky_counter.hpp)
  Same as `LockFreeZeroStickyCounter` but it's wait-free instead.
+
+### Single Producer Single Consumer Queue - [src/spsc_queue.hpp](src/spsc_queue.hpp)
+Lock-free implementation of Single Producer Single Consumer Queue.
+Inspiration comes from [Single Producer Single Consumer Lock-free FIFO From the Ground Up - Charles Frasch - CppCon 2023](https://www.youtube.com/watch?v=K3P_Lmq6pw0&list=PLr05g8IRfRd51NGMQ-9X_BuTHHhzro5P0) as well as [Erik Rigtorp's SPSCQueue implementation](https://github.com/rigtorp/SPSCQueue/tree/master)
 
 ## Tests and benchmarks
 All tests are in [tests](tests/) subdirectory and all benchmarks are in [benchmarks](benchmarks/) subdirectory.
@@ -21,4 +26,6 @@ cmake -E make_directory build && cd build && cmake .. && make
 ./bench_seq_lock
 # LockFreeZeroStickyCounter vs WaitFreeZeroStickyCounter
 ./bench_zero_sticky_counters
+# SPSCQueue vs mutex-based vs Erik Rigtorp's SPSCQueue implementation
+./bench_spsc_queue
 ```

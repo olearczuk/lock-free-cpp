@@ -29,5 +29,7 @@ FetchContent_MakeAvailable(benchmark)
 
 add_executable(bench_seq_lock bench/benchmark_seq_lock.cpp)
 add_executable(bench_zero_sticky_counters bench/benchmark_zero_sticky_counters.cpp)
+add_executable(bench_spsc_queue bench/benchmark_spsc_queue.cpp)
 target_link_libraries(bench_seq_lock PRIVATE benchmark::benchmark pthread)
 target_link_libraries(bench_zero_sticky_counters PRIVATE benchmark::benchmark pthread)
+target_link_libraries(bench_spsc_queue PRIVATE benchmark::benchmark pthread)
