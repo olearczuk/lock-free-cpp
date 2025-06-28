@@ -30,6 +30,8 @@ SOFTWARE.
 #include <stdexcept>
 #include <type_traits>  // std::enable_if, std::is_*_constructible
 
+#include "common.hpp"
+
 #ifdef __has_cpp_attribute
 #if __has_cpp_attribute(nodiscard)
 #define RIGTORP_NODISCARD [[nodiscard]]
@@ -40,6 +42,8 @@ SOFTWARE.
 #endif
 
 namespace rigtorp {
+
+using common::CACHE_LINE_SIZE;
 
 template <typename T, typename Allocator = std::allocator<T>>
 class SPSCQueue {
@@ -82,11 +86,11 @@ class SPSCQueue {
         allocator_, capacity_ + 2 * kPadding);
 #endif
 
-    static_assert(alignof(SPSCQueue<T>) == kCacheLineSize, "");
-    static_assert(sizeof(SPSCQueue<T>) >= 3 * kCacheLineSize, "");
+    static_assert(alignof(SPSCQueue<T>) == CACHE_LINE_SIZE, "");
+    static_assert(sizeof(SPSCQueue<T>) >= 3 * CACHE_LINE_SIZE, "");
     assert(reinterpret_cast<char *>(&readIdx_) -
                reinterpret_cast<char *>(&writeIdx_) >=
-           static_cast<std::ptrdiff_t>(kCacheLineSize));
+           static_cast<std::ptrdiff_t>(CACHE_LINE_SIZE));
   }
 
   ~SPSCQueue() {
@@ -207,11 +211,8 @@ class SPSCQueue {
   RIGTORP_NODISCARD size_t capacity() const noexcept { return capacity_ - 1; }
 
  private:
-  static constexpr size_t kCacheLineSize =
-      std::hardware_constructive_interference_size;
-
   // Padding to avoid false sharing between slots_ and adjacent allocations
-  static constexpr size_t kPadding = (kCacheLineSize - 1) / sizeof(T) + 1;
+  static constexpr size_t kPadding = (CACHE_LINE_SIZE - 1) / sizeof(T) + 1;
 
  private:
   size_t capacity_;
@@ -225,9 +226,9 @@ class SPSCQueue {
   // Align to cache line size in order to avoid false sharing
   // readIdxCache_ and writeIdxCache_ is used to reduce the amount of cache
   // coherency traffic
-  alignas(kCacheLineSize) std::atomic<size_t> writeIdx_ = {0};
-  alignas(kCacheLineSize) size_t readIdxCache_ = 0;
-  alignas(kCacheLineSize) std::atomic<size_t> readIdx_ = {0};
-  alignas(kCacheLineSize) size_t writeIdxCache_ = 0;
+  alignas(CACHE_LINE_SIZE) std::atomic<size_t> writeIdx_ = {0};
+  alignas(CACHE_LINE_SIZE) size_t readIdxCache_ = 0;
+  alignas(CACHE_LINE_SIZE) std::atomic<size_t> readIdx_ = {0};
+  alignas(CACHE_LINE_SIZE) size_t writeIdxCache_ = 0;
 };
 }  // namespace rigtorp

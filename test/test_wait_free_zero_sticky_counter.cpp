@@ -48,7 +48,7 @@ TEST(WaitFreeZeroStickyCounter, ConcurrentIncrements) {
   std::vector<std::thread> threads;
 
   for (int i = 0; i < num_threads; ++i) {
-    threads.emplace_back([&counter, increments_per_thread]() {
+    threads.emplace_back([&counter]() {
       for (int j = 0; j < increments_per_thread; ++j) {
         counter.incrementIfNotZero();
       }
@@ -94,7 +94,7 @@ TEST(WaitFreeZeroStickyCounter, ConcurrentIncDecStress) {
   std::vector<std::thread> threads;
 
   for (int i = 0; i < num_threads; ++i) {
-    threads.emplace_back([&counter, i]() {
+    threads.emplace_back([&counter]() {
       for (int j = 0; j < ops_per_thread; ++j) {
         if (j % 2 == 0) {
           counter.incrementIfNotZero();
@@ -132,7 +132,7 @@ TEST(WaitFreeZeroStickyCounter, ConcurrentIncDecReadStress) {
 
   // Worker threads: increment and decrement
   for (std::size_t i = 0; i < num_workers; ++i) {
-    threads.emplace_back([&counter, i]() {
+    threads.emplace_back([&counter]() {
       for (int j = 0; j < ops_per_thread; ++j) {
         if (j % 2 == 0) {
           counter.incrementIfNotZero();
