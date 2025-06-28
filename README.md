@@ -12,7 +12,7 @@ It avoids locks by using atomic operations, making it suitable for high-performa
  Same as `LockFreeZeroStickyCounter` but it's wait-free instead.
 
 ## Single Producer Single Consumer Queue - [src/spsc_queue.hpp](src/spsc_queue.hpp)
-Lock-free implementation of Single Producer Single Consumer Queue.
+Lock-free implementation of Single Producer Single Consumer Queue.<br/>
 Inspiration comes from [Single Producer Single Consumer Lock-free FIFO From the Ground Up - Charles Frasch - CppCon 2023](https://www.youtube.com/watch?v=K3P_Lmq6pw0&list=PLr05g8IRfRd51NGMQ-9X_BuTHHhzro5P0) as well as [Erik Rigtorp's SPSCQueue implementation](https://github.com/rigtorp/SPSCQueue/tree/master)
 
 ## Tests and benchmarks
