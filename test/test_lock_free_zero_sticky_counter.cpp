@@ -115,14 +115,14 @@ TEST(LockFreeZeroStickyCounter, ConcurrentIncDecReadStress) {
   zero_sticky_counter::LockFreeZeroStickyCounter counter;
   constexpr int num_threads = 8;
   constexpr int ops_per_thread = 10000;
-  constexpr int num_readers = 4;
+  constexpr std::size_t num_readers = 4;
   constexpr int num_workers = num_threads - num_readers;
   std::vector<std::thread> threads;
   std::atomic<bool> running{true};
   std::atomic<uint64_t> read_sum{0};
 
   // Reader threads: continuously read the counter while workers are running
-  for (int i = 0; i < num_readers; ++i) {
+  for (std::size_t i = 0; i < num_readers; ++i) {
     threads.emplace_back([&counter, &running, &read_sum]() {
       while (running.load(std::memory_order_relaxed)) {
         read_sum.fetch_add(counter.read(), std::memory_order_relaxed);
@@ -131,7 +131,7 @@ TEST(LockFreeZeroStickyCounter, ConcurrentIncDecReadStress) {
   }
 
   // Worker threads: increment and decrement
-  for (int i = 0; i < num_workers; ++i) {
+  for (std::size_t i = 0; i < num_workers; ++i) {
     threads.emplace_back([&counter, i]() {
       for (int j = 0; j < ops_per_thread; ++j) {
         if (j % 2 == 0) {
@@ -144,11 +144,11 @@ TEST(LockFreeZeroStickyCounter, ConcurrentIncDecReadStress) {
   }
 
   // Wait for workers to finish, then stop readers
-  for (int i = num_readers; i < threads.size(); ++i) {
+  for (auto i = num_readers; i < threads.size(); ++i) {
     threads[i].join();
   }
   running = false;
-  for (int i = 0; i < num_readers; ++i) {
+  for (std::size_t i = 0; i < num_readers; ++i) {
     threads[i].join();
   }
 

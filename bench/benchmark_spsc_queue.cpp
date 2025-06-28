@@ -49,7 +49,6 @@ static void BM_SPSCQueue_SingleThreaded(benchmark::State& state) {
       queue.push(i);
     }
 
-    int item;
     int sum = 0;
     for (int i = 0; i < N; ++i) {
       if (auto val = queue.front(); val != nullptr) {

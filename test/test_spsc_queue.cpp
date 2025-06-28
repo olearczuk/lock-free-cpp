@@ -145,7 +145,7 @@ TEST(SPSCQueue, ProducerConsumerSum) {
 
   unsigned int sum = 0;
   std::thread producer([&queue]() {
-    for (int i = 0; i < N; ++i) {
+    for (unsigned int i = 0; i < N; ++i) {
       // Wait until push succeeds (queue may be full)
       while (!queue.push(i)) {
       }
@@ -153,7 +153,7 @@ TEST(SPSCQueue, ProducerConsumerSum) {
   });
 
   std::thread consumer([&queue, &sum]() {
-    for (int i = 0; i < N; ++i) {
+    for (unsigned int i = 0; i < N; ++i) {
       // Wait until front is not empty
       int* val_ptr = nullptr;
       while ((val_ptr = queue.front()) == nullptr) {
