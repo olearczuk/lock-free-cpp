@@ -8,6 +8,8 @@
 
 namespace seq_lock {
 
+using common::CACHE_LINE_SIZE;
+
 /**
  * @brief A lock-free sequence lock (seqlock) for synchronizing access to a
  * single value between multiple readers and a single writer.
