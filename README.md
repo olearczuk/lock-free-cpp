@@ -1,5 +1,10 @@
-![Build and Run Tests](https://github.com/olearczuk/lock-free-cpp/actions/workflows/build_run_tests.yml/badge.svg?branch=main)
 # Lock-free Data Structures and Algorithms
+
+[![Build and Run Tests][build-run-tests-badge]][build-run-tests-url]
+
+[build-run-tests-badge]: https://github.com/olearczuk/lock-free-cpp/actions/workflows/build_run_tests.yml/badge.svg
+[build-run-tests-url]: https://github.com/olearczuk/lock-free-cpp/actions/workflows/build_run_tests.yml
+
 ## Implemented data structures
 <details>
 <summary><a href="https://en.wikipedia.org/wiki/Seqlock">SeqLock</a> - <a href="src/seq_lock.hpp">src/seq_lock.hpp</a></summary>
