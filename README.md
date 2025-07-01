@@ -35,6 +35,14 @@ Inspiration comes from [Single Producer Single Consumer Lock-free FIFO From the 
 
 </details>
 
+<details>
+<summary>Multi Producer Multi Consumer Queue - <a href="src/mpmc_queue.hpp">src/mpmc_queue.hpp</a></summary>
+
+Lock-free implementation of Multi Producer Multi Consumer Queue.<br/>
+Inspiration comes from [User API and C++ Implementation of a Multi Producer, Multi Consumer, Lock Free, Atomic Queue - Erez Strauss - CppCon 2024
+](https://www.youtube.com/watch?v=bjz_bMNNWRk), my implementation is a more basic version of Erez's implementation.
+</details>
+
 ## Tests and benchmarks
 All tests are in [tests](tests/) subdirectory and all benchmarks are in [benchmarks](benchmarks/) subdirectory.
 ```bash
@@ -48,4 +56,6 @@ cmake -E make_directory build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
 ./bench_zero_sticky_counters
 # SPSCQueue vs mutex-based vs Erik Rigtorp's SPSCQueue implementation
 ./bench_spsc_queue
+# MPMCQueue vs mutex-based
+./bench_mpmc_queue
 ```
