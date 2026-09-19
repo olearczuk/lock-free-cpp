@@ -73,14 +73,14 @@ class alignas(CACHE_LINE_SIZE) SeqLock {
   [[nodiscard]] T read() {
     while (true) {
       auto s1 = seq_.load(std::memory_order_acquire);
+      if (s1 % 2 == 0) {
+        T v = value_;
+        // Makes sure value_ is writtern after initial increment of seq_
+        std::atomic_signal_fence(std::memory_order_acq_rel);
 
-      // Makes sure value_ is read before seq_ is checked again
-      T v = value_;
-      std::atomic_signal_fence(std::memory_order_acq_rel);
-
-      auto s2 = seq_.load(std::memory_order_relaxed);
-      if (s1 == s2 && s1 % 2 == 0) {
-        return v;
+        if (s1 == seq_.load(std::memory_order_relaxed)) {
+          return v;
+        }
       }
 
       // Yield to avoid busy-waiting
@@ -97,12 +97,12 @@ class alignas(CACHE_LINE_SIZE) SeqLock {
    * @param value The new value to store.
    */
   void write(const T& value) {
-    auto s1 = seq_.load(std::memory_order_relaxed);
-    seq_.store(s1 + 1, std::memory_order_relaxed);
+    auto s1 = seq_.fetch_add(1, std::memory_order_relaxed);
 
-    // Makes sure value_ is written after initial increment of seq_
+    // Makes sure value_ is writtern after initial increment of seq_
     std::atomic_signal_fence(std::memory_order_acq_rel);
     value_ = value;
+
     seq_.store(s1 + 2, std::memory_order_release);
   }
 };

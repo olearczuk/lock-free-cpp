@@ -103,18 +103,18 @@ BENCHMARK_TEMPLATE(BM_Lock_WR, seq_lock::SeqLock, LARGE_WRITE_PERCENTAGE)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("SeqLock/SmallWritePercentage");
+    ->Name("SeqLock/LargeWritePercentage");
 BENCHMARK_TEMPLATE(BM_Lock_WR, SharedMutexLock, LARGE_WRITE_PERCENTAGE)
     ->Threads(2)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("SharedMutex/SmallWritePercentage");
+    ->Name("SharedMutex/LargeWritePercentage");
 BENCHMARK_TEMPLATE(BM_Lock_WR, MutexLock, LARGE_WRITE_PERCENTAGE)
     ->Threads(2)
     ->Threads(4)
     ->Threads(8)
     ->Threads(16)
-    ->Name("Mutex/SmallWritePercentage");
+    ->Name("Mutex/LargeWritePercentage");
 
 BENCHMARK_MAIN();

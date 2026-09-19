@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 
 #include <atomic>
-#include <deque>
-#include <numeric>
 #include <thread>
 
 #include "../src/seq_lock.hpp"
