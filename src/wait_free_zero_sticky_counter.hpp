@@ -62,7 +62,9 @@ class WaitFreeZeroStickyCounter {
         // back to 1 so the value is not zero. That's fine because from external
         // point of view it's exactly the same as if increment occurred before
         // decrement
-        if (counter_.compare_exchange_strong(val, zero)) {
+        if (counter_.compare_exchange_strong(val, zero,
+                                             std::memory_order_relaxed,
+                                             std::memory_order_relaxed)) {
           return true;
         }
         // Setting to zero failed - perhaps read() set it to zero - exchange to
@@ -87,7 +89,9 @@ class WaitFreeZeroStickyCounter {
     // Value has been changed to 0 - try to help decrement() in setting it
     // to zero.
     // Add additional helped flag so decrement() can take credit for it.
-    if (val == 0 && counter_.compare_exchange_strong(val, zero | helped)) {
+    if (val == 0 && counter_.compare_exchange_strong(
+                        val, zero | helped, std::memory_order_relaxed,
+                        std::memory_order_relaxed)) {
       return 0;
     }
     // simply check if zero flag is set
