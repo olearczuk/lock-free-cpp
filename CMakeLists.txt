@@ -13,6 +13,7 @@ include(FetchContent)
 FetchContent_Declare(
     googletest
     URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+    SYSTEM
 )
 FetchContent_MakeAvailable(googletest)
 
@@ -26,6 +27,7 @@ FetchContent_Declare(
   benchmark
   GIT_REPOSITORY https://github.com/google/benchmark.git
   GIT_TAG v1.8.3
+  SYSTEM
 )
 FetchContent_MakeAvailable(benchmark)
 
