@@ -12,13 +12,6 @@ namespace zero_sticky_counter {
  * pointers, where you want to track the number of active references to a shared
  * resource in a wait-free manner.
  *
- * - The counter is initialized to 1.
- * - incrementIfNotZero() will only increment the counter if it is not zero,
- *   and returns true if the increment succeeded.
- * - decrement() decrements the counter and returns true if the counter reached
- *   zero.
- * - read() returns the current value of the counter.
- *
  * All operations use relaxed memory ordering, which is sufficient for pure
  * reference counting (not for synchronizing access to other shared data).
  * This implementation uses special bit patterns to ensure wait-freedom and
@@ -34,17 +27,11 @@ class WaitFreeZeroStickyCounter {
 
   std::atomic<uint64_t> counter_;
 
+  static bool isZero(uint64_t val) { return val == 0 || (val & zero); }
+
  public:
-  /**
-   * @brief Constructs a WaitFreeZeroStickyCounter with an initial value of 1.
-   */
   WaitFreeZeroStickyCounter() : counter_(1) {}
 
-  /**
-   * @brief Constructs a WaitFreeZeroStickyCounter with a specified initial
-   * value.
-   * @param initial_value The initial value of the counter.
-   */
   explicit WaitFreeZeroStickyCounter(uint64_t initial_value)
       : counter_(initial_value) {}
 
@@ -63,23 +50,29 @@ class WaitFreeZeroStickyCounter {
    */
   bool decrement() {
     if (counter_.fetch_sub(1, std::memory_order_relaxed) == 1) {
-      auto val = counter_.load(std::memory_order_relaxed);
-      // Set to zero using flag.
-      // It is possible that value is set to 0 but before
-      // compare_exchange_strong succeeds, incrementIfNotZero() changes it back
-      // to 1 so the value is not zero.
-      // That's fine because from external point of view it's exactly the same
-      // as if increment occurred before decrement
-      if (counter_.compare_exchange_strong(val, zero)) {
-        return true;
-      }
-      // Setting to zero failed - perhaps read() set it to zero - exchange to
-      // zero to "take credit".
-      // In case of multiple decrements, we want only one want to take credit
-      // for it, thus atomic operation again.
-      else if ((val & helped) &&
-               counter_.exchange(zero, std::memory_order_relaxed) & helped) {
-        return true;
+      // Check if value remains 0 -> guards against concurrent increment.
+      // Avoids scenario when (using resource example for shared ptr
+      // case)
+      // - increment returns true making caller think the resource still exists
+      // - decrement returning true making caller clean up the resource
+      if (auto val = counter_.load(std::memory_order_relaxed); isZero(val)) {
+        // Set to zero using flag.
+        // It is possible that value is set to 0 but before
+        // compare_exchange_strong succeeds, incrementIfNotZero() changes it
+        // back to 1 so the value is not zero. That's fine because from external
+        // point of view it's exactly the same as if increment occurred before
+        // decrement
+        if (counter_.compare_exchange_strong(val, zero)) {
+          return true;
+        }
+        // Setting to zero failed - perhaps read() set it to zero - exchange to
+        // zero to "take credit".
+        // In case of multiple decrements, we want only one want to take credit
+        // for it, thus atomic operation again.
+        else if ((val & helped) &&
+                 counter_.exchange(zero, std::memory_order_relaxed) & helped) {
+          return true;
+        }
       }
     }
     return false;
@@ -99,7 +92,7 @@ class WaitFreeZeroStickyCounter {
     }
     // simply check if zero flag is set
     else {
-      return val & zero ? 0 : val;
+      return isZero(val) ? 0 : val;
     }
   }
 };
